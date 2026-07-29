@@ -1,0 +1,9 @@
+modLoader="javafml"
+loaderVersion="[55,)"
+license="MIT"
+[[mods]]
+modId="dayzgui"
+version="1.0.0"
+displayName="DayZ GUI Modifier"
+description='''DayZ-style survival and HUD for Forge 1.20.1—blood, hunger, thirst, temperature and DayZ-like inventory.'''
+authors="GothicSerpant"

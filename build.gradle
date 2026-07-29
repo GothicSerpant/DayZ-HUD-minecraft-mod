@@ -1,0 +1,30 @@
+plugins {
+    id 'net.minecraftforge.gradle' version '5.1.+'
+    id 'java'
+}
+
+group = 'net.gothicserpant'
+version = '1.0.0'
+archivesBaseName = 'dayzgui'
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://maven.minecraftforge.net' }
+}
+
+dependencies {
+    // target Forge for MC 1.20.1 — ensure this matches the MDK you use
+    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0' // example Forge artifact - replace to exact MDK version you downloaded
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+    runs {
+        client {
+            workingDirectory project.file('run')
+        }
+    }
+}
