@@ -2,9 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="192" height="128" viewBox="0 0 192 128" version="1.1">
   <!--
     Icons atlas: 6 columns x 4 rows.
-    Default viewBox is for 32x32 frames (6*32=192, 4*32=128).
-    If you export larger (e.g., 48x48), scale when exporting from your editor.
-    Silhouettes are stylized and use green glow for DayZ aesthetic.
+    Frames: 32x32 each. Filled area uses a dark green; empty area is transparent.
   -->
   <defs>
     <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -14,160 +12,178 @@
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
-    <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7CFF6B" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#3AFF5A" stop-opacity="0.85"/>
+
+    <!-- Darker fill color for the filled portion -->
+    <linearGradient id="darkGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B6B2E"/>
+      <stop offset="100%" stop-color="#075427"/>
     </linearGradient>
+
+    <!-- Base silhouettes -->
     <g id="droplet">
-      <path d="M16 2 C12 8, 6 12, 6 18 C6 25, 11 30, 16 30 C21 30, 26 25, 26 18 C26 12, 20 8, 16 2 Z" fill="url(#gradGreen)" stroke="#0C3F19" stroke-width="1.2"/>
+      <path d="M16 2 C12 8, 6 12, 6 18 C6 25, 11 30, 16 30 C21 30, 26 25, 26 18 C26 12, 20 8, 16 2 Z" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
     </g>
     <g id="bottle">
-      <path d="M12 4 L20 4 L20 8 L22 8 L22 28 C22 30, 10 30, 10 28 L10 8 L12 8 Z" fill="url(#gradGreen)" stroke="#0C3F19" stroke-width="1.2"/>
+      <path d="M12 4 L20 4 L20 8 L22 8 L22 28 C22 30, 10 30, 10 28 L10 8 L12 8 Z" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
     </g>
     <g id="plate">
-      <ellipse cx="16" cy="18" rx="10" ry="6" fill="url(#gradGreen)" stroke="#0C3F19" stroke-width="1.2"/>
+      <ellipse cx="16" cy="18" rx="10" ry="6" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
       <rect x="8" y="10" width="4" height="10" rx="1" fill="#0C3F19"/>
       <rect x="20" y="10" width="2" height="10" rx="1" fill="#0C3F19"/>
     </g>
     <g id="thermo">
-      <rect x="14" y="6" width="4" height="16" rx="2" fill="url(#gradGreen)" stroke="#0C3F19" stroke-width="1"/>
-      <circle cx="16" cy="26" r="6" fill="url(#gradGreen)" stroke="#0C3F19" stroke-width="1"/>
+      <rect x="14" y="6" width="4" height="16" rx="2" fill="none" stroke="#3A8F4E" stroke-width="1"/>
+      <circle cx="16" cy="26" r="6" fill="none" stroke="#3A8F4E" stroke-width="1"/>
     </g>
+
+    <!-- Clip rectangles for each cell (absolute coordinates).
+         Frame size = 32x32. Rows start at y = 0,32,64,96.
+         Fill heights (bottom-up) for 6 steps: 32,26,20,13,6,0
+    -->
+    <!-- Row 0 (y=0) droplet clips -->
+    <clipPath id="clip-drop-c0"><rect x="0"   y="0"  width="32" height="32"/></clipPath>
+    <clipPath id="clip-drop-c1"><rect x="32"  y="6"  width="32" height="26"/></clipPath>
+    <clipPath id="clip-drop-c2"><rect x="64"  y="12" width="32" height="20"/></clipPath>
+    <clipPath id="clip-drop-c3"><rect x="96"  y="19" width="32" height="13"/></clipPath>
+    <clipPath id="clip-drop-c4"><rect x="128" y="26" width="32" height="6"/></clipPath>
+    <clipPath id="clip-drop-c5"><rect x="160" y="32" width="32" height="0"/></clipPath>
+
+    <!-- Row 1 (y=32) plate clips -->
+    <clipPath id="clip-plate-c0"><rect x="0"   y="32" width="32" height="32"/></clipPath>
+    <clipPath id="clip-plate-c1"><rect x="32"  y="38" width="32" height="26"/></clipPath>
+    <clipPath id="clip-plate-c2"><rect x="64"  y="44" width="32" height="20"/></clipPath>
+    <clipPath id="clip-plate-c3"><rect x="96"  y="51" width="32" height="13"/></clipPath>
+    <clipPath id="clip-plate-c4"><rect x="128" y="58" width="32" height="6"/></clipPath>
+    <clipPath id="clip-plate-c5"><rect x="160" y="64" width="32" height="0"/></clipPath>
+
+    <!-- Row 2 (y=64) bottle clips -->
+    <clipPath id="clip-bottle-c0"><rect x="0"   y="64" width="32" height="32"/></clipPath>
+    <clipPath id="clip-bottle-c1"><rect x="32"  y="70" width="32" height="26"/></clipPath>
+    <clipPath id="clip-bottle-c2"><rect x="64"  y="76" width="32" height="20"/></clipPath>
+    <clipPath id="clip-bottle-c3"><rect x="96"  y="83" width="32" height="13"/></clipPath>
+    <clipPath id="clip-bottle-c4"><rect x="128" y="90" width="32" height="6"/></clipPath>
+    <clipPath id="clip-bottle-c5"><rect x="160" y="96" width="32" height="0"/></clipPath>
+
+    <!-- Row 3 (y=96) thermo clips -->
+    <clipPath id="clip-thermo-c0"><rect x="0"   y="96" width="32" height="32"/></clipPath>
+    <clipPath id="clip-thermo-c1"><rect x="32"  y="102" width="32" height="26"/></clipPath>
+    <clipPath id="clip-thermo-c2"><rect x="64"  y="108" width="32" height="20"/></clipPath>
+    <clipPath id="clip-thermo-c3"><rect x="96"  y="115" width="32" height="13"/></clipPath>
+    <clipPath id="clip-thermo-c4"><rect x="128" y="122" width="32" height="6"/></clipPath>
+    <clipPath id="clip-thermo-c5"><rect x="160" y="128" width="32" height="0"/></clipPath>
   </defs>
 
-  <!-- Row 0: blood droplet 6 states: full->empty left->right -->
-  <!-- We'll draw filled droplet with different inner masks to simulate steps -->
+  <!-- Row 0: droplet cells -->
   <g transform="translate(0,0)">
-    <!-- col 0 (full) -->
+    <!-- col0 full fill -->
     <g transform="translate(0,0)" filter="url(#glow)">
+      <use href="#droplet" fill="url(#darkGreen)" clip-path="url(#clip-drop-c0)"/>
       <use href="#droplet"/>
-      <path d="M6 18 C6 25, 11 30, 16 30 C21 30, 26 25, 26 18 L26 18 L6 18 Z" fill="#002200" opacity="0.0"/>
-    </g>
-    <!-- col 1 -->
-    <g transform="translate(32,0)" filter="url(#glow)">
-      <use href="#droplet"/>
-      <rect x="6" y="12" width="20" height="18" fill="#002200" opacity="0.12" />
-      <clipPath id="clip1"><use href="#droplet"/></clipPath>
-    </g>
-    <!-- col 2 -->
-    <g transform="translate(64,0)" filter="url(#glow)">
-      <use href="#droplet"/>
-      <rect x="6" y="14" width="20" height="16" fill="#002200" opacity="0.22" />
-    </g>
-    <!-- col 3 -->
-    <g transform="translate(96,0)" filter="url(#glow)">
-      <use href="#droplet"/>
-      <rect x="6" y="16" width="20" height="14" fill="#002200" opacity="0.34" />
-    </g>
-    <!-- col 4 -->
-    <g transform="translate(128,0)" filter="url(#glow)">
-      <use href="#droplet"/>
-      <rect x="6" y="18" width="20" height="12" fill="#002200" opacity="0.48" />
-    </g>
-    <!-- col 5 (empty outline) -->
-    <g transform="translate(160,0)" >
-      <path d="M16 2 C12 8, 6 12, 6 18 C6 25, 11 30, 16 30 C21 30, 26 25, 26 18 C26 12, 20 8, 16 2 Z" fill="none" stroke="#3A8F4E" stroke-width="1.5"/>
-    </g>
-  </g>
-
-  <!-- Row 1: food plate icons -->
-  <g transform="translate(0,32)">
-    <!-- col 0 full -->
-    <g transform="translate(0,0)" filter="url(#glow)">
-      <use href="#plate"/>
-      <ellipse cx="16" cy="18" rx="6" ry="3" fill="#063E16" opacity="0.0"/>
-    </g>
-    <!-- col 1 -->
-    <g transform="translate(32,0)" filter="url(#glow)">
-      <use href="#plate"/>
-      <rect x="6" y="12" width="20" height="14" fill="#063E16" opacity="0.12" rx="2"/>
-    </g>
-    <!-- col 2 -->
-    <g transform="translate(64,0)" filter="url(#glow)">
-      <use href="#plate"/>
-      <rect x="6" y="14" width="20" height="12" fill="#063E16" opacity="0.22" rx="2"/>
-    </g>
-    <!-- col 3 -->
-    <g transform="translate(96,0)" filter="url(#glow)">
-      <use href="#plate"/>
-      <rect x="6" y="16" width="20" height="10" fill="#063E16" opacity="0.34" rx="2"/>
-    </g>
-    <!-- col 4 -->
-    <g transform="translate(128,0)" filter="url(#glow)">
-      <use href="#plate"/>
-      <rect x="6" y="18" width="20" height="8" fill="#063E16" opacity="0.48" rx="2"/>
-    </g>
-    <!-- col 5 empty -->
-    <g transform="translate(160,0)">
-      <use href="#plate"/>
-      <ellipse cx="16" cy="18" rx="10" ry="6" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
-    </g>
-  </g>
-
-  <!-- Row 2: drink bottle icons -->
-  <g transform="translate(0,64)">
-    <!-- col 0 full -->
-    <g transform="translate(0,0)" filter="url(#glow)">
-      <use href="#bottle"/>
-    </g>
-    <!-- col 1 -->
-    <g transform="translate(32,0)" filter="url(#glow)">
-      <use href="#bottle"/>
-      <rect x="10" y="12" width="12" height="12" fill="#022F1A" opacity="0.12"/>
-    </g>
-    <!-- col 2 -->
-    <g transform="translate(64,0)" filter="url(#glow)">
-      <use href="#bottle"/>
-      <rect x="10" y="14" width="12" height="10" fill="#022F1A" opacity="0.22"/>
-    </g>
-    <!-- col 3 -->
-    <g transform="translate(96,0)" filter="url(#glow)">
-      <use href="#bottle"/>
-      <rect x="10" y="16" width="12" height="8" fill="#022F1A" opacity="0.34"/>
-    </g>
-    <!-- col 4 -->
-    <g transform="translate(128,0)" filter="url(#glow)">
-      <use href="#bottle"/>
-      <rect x="10" y="18" width="12" height="6" fill="#022F1A" opacity="0.48"/>
-    </g>
-    <!-- col 5 empty -->
-    <g transform="translate(160,0)">
-      <use href="#bottle"/>
-      <rect x="12" y="8" width="8" height="22" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
-    </g>
-  </g>
-
-  <!-- Row 3: thermometer icons (hot -> cold left->right) -->
-  <g transform="translate(0,96)">
-    <!-- col0 hottest (full red-ish fill overlaid with green gradient) -->
-    <g transform="translate(0,0)" filter="url(#glow)">
-      <use href="#thermo"/>
-      <rect x="14" y="10" width="4" height="14" fill="#D94B3A" opacity="0.3"/>
     </g>
     <!-- col1 -->
     <g transform="translate(32,0)" filter="url(#glow)">
-      <use href="#thermo"/>
-      <rect x="14" y="12" width="4" height="12" fill="#D94B3A" opacity="0.22"/>
+      <use href="#droplet" fill="url(#darkGreen)" clip-path="url(#clip-drop-c1)"/>
+      <use href="#droplet"/>
     </g>
     <!-- col2 -->
     <g transform="translate(64,0)" filter="url(#glow)">
-      <use href="#thermo"/>
-      <rect x="14" y="14" width="4" height="10" fill="#9BCD6E" opacity="0.18"/>
+      <use href="#droplet" fill="url(#darkGreen)" clip-path="url(#clip-drop-c2)"/>
+      <use href="#droplet"/>
     </g>
     <!-- col3 -->
     <g transform="translate(96,0)" filter="url(#glow)">
-      <use href="#thermo"/>
-      <rect x="14" y="16" width="4" height="8" fill="#7CFF6B" opacity="0.16"/>
+      <use href="#droplet" fill="url(#darkGreen)" clip-path="url(#clip-drop-c3)"/>
+      <use href="#droplet"/>
     </g>
     <!-- col4 -->
     <g transform="translate(128,0)" filter="url(#glow)">
-      <use href="#thermo"/>
-      <rect x="14" y="18" width="4" height="6" fill="#5AF06B" opacity="0.14"/>
+      <use href="#droplet" fill="url(#darkGreen)" clip-path="url(#clip-drop-c4)"/>
+      <use href="#droplet"/>
     </g>
-    <!-- col5 cold outline -->
+    <!-- col5 empty outline only -->
+    <g transform="translate(160,0)">
+      <use href="#droplet"/>
+    </g>
+  </g>
+
+  <!-- Row 1: plate cells -->
+  <g transform="translate(0,32)">
+    <g transform="translate(0,0)" filter="url(#glow)">
+      <use href="#plate" fill="url(#darkGreen)" clip-path="url(#clip-plate-c0)"/>
+      <use href="#plate"/>
+    </g>
+    <g transform="translate(32,0)" filter="url(#glow)">
+      <use href="#plate" fill="url(#darkGreen)" clip-path="url(#clip-plate-c1)"/>
+      <use href="#plate"/>
+    </g>
+    <g transform="translate(64,0)" filter="url(#glow)">
+      <use href="#plate" fill="url(#darkGreen)" clip-path="url(#clip-plate-c2)"/>
+      <use href="#plate"/>
+    </g>
+    <g transform="translate(96,0)" filter="url(#glow)">
+      <use href="#plate" fill="url(#darkGreen)" clip-path="url(#clip-plate-c3)"/>
+      <use href="#plate"/>
+    </g>
+    <g transform="translate(128,0)" filter="url(#glow)">
+      <use href="#plate" fill="url(#darkGreen)" clip-path="url(#clip-plate-c4)"/>
+      <use href="#plate"/>
+    </g>
+    <g transform="translate(160,0)">
+      <use href="#plate"/>
+    </g>
+  </g>
+
+  <!-- Row 2: bottle cells -->
+  <g transform="translate(0,64)">
+    <g transform="translate(0,0)" filter="url(#glow)">
+      <use href="#bottle" fill="url(#darkGreen)" clip-path="url(#clip-bottle-c0)"/>
+      <use href="#bottle"/>
+    </g>
+    <g transform="translate(32,0)" filter="url(#glow)">
+      <use href="#bottle" fill="url(#darkGreen)" clip-path="url(#clip-bottle-c1)"/>
+      <use href="#bottle"/>
+    </g>
+    <g transform="translate(64,0)" filter="url(#glow)">
+      <use href="#bottle" fill="url(#darkGreen)" clip-path="url(#clip-bottle-c2)"/>
+      <use href="#bottle"/>
+    </g>
+    <g transform="translate(96,0)" filter="url(#glow)">
+      <use href="#bottle" fill="url(#darkGreen)" clip-path="url(#clip-bottle-c3)"/>
+      <use href="#bottle"/>
+    </g>
+    <g transform="translate(128,0)" filter="url(#glow)">
+      <use href="#bottle" fill="url(#darkGreen)" clip-path="url(#clip-bottle-c4)"/>
+      <use href="#bottle"/>
+    </g>
+    <g transform="translate(160,0)">
+      <use href="#bottle"/>
+    </g>
+  </g>
+
+  <!-- Row 3: thermo cells -->
+  <g transform="translate(0,96)">
+    <g transform="translate(0,0)" filter="url(#glow)">
+      <use href="#thermo" fill="url(#darkGreen)" clip-path="url(#clip-thermo-c0)"/>
+      <use href="#thermo"/>
+    </g>
+    <g transform="translate(32,0)" filter="url(#glow)">
+      <use href="#thermo" fill="url(#darkGreen)" clip-path="url(#clip-thermo-c1)"/>
+      <use href="#thermo"/>
+    </g>
+    <g transform="translate(64,0)" filter="url(#glow)">
+      <use href="#thermo" fill="url(#darkGreen)" clip-path="url(#clip-thermo-c2)"/>
+      <use href="#thermo"/>
+    </g>
+    <g transform="translate(96,0)" filter="url(#glow)">
+      <use href="#thermo" fill="url(#darkGreen)" clip-path="url(#clip-thermo-c3)"/>
+      <use href="#thermo"/>
+    </g>
+    <g transform="translate(128,0)" filter="url(#glow)">
+      <use href="#thermo" fill="url(#darkGreen)" clip-path="url(#clip-thermo-c4)"/>
+      <use href="#thermo"/>
+    </g>
     <g transform="translate(160,0)">
       <use href="#thermo"/>
-      <circle cx="16" cy="26" r="6" fill="none" stroke="#3A8F4E" stroke-width="1.2"/>
     </g>
   </g>
 </svg>
