@@ -22,6 +22,11 @@ public class BandageItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
+        // Prevent use while on cooldown
+        if (player.getCooldowns().isOnCooldown(this)) {
+            return InteractionResultHolder.fail(stack);
+        }
+
         if (!level.isClientSide) {
             player.getCapability(SurvivalCapability.SURVIVAL_CAP).ifPresent(cap -> {
                 cap.setBleeding(false);
@@ -33,7 +38,12 @@ public class BandageItem extends Item {
                 }
             });
 
+            // Play a sound for feedback
             level.playSound(null, player.blockPosition(), SoundEvents.HONEY_DRINK, SoundSource.PLAYERS, 1.0f, 1.0f);
+
+            // Add a 2-second cooldown (40 ticks)
+            player.getCooldowns().addCooldown(this, 40);
+
             if (!player.getAbilities().instabuild) stack.shrink(1);
             return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
         }
